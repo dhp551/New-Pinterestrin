@@ -4,9 +4,14 @@ class PinsController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
   def index
      @pins = Pin.all.order("created_at DESC").paginate(:page => params[:page], :per_page => 18)
+     respond_to do |format|
+       format.html
+       format.json { render json: @pins }
+     end
    end
 
   def show
+  
   end
 
   def new
@@ -42,6 +47,10 @@ class PinsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_pin
       @pin = Pin.find(params[:id])
+      respond_to do |format|
+        format.html
+        format.json { render json: @pin }
+      end
     end
 
     def correct_user
